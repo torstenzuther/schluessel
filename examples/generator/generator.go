@@ -10,6 +10,7 @@ import (
 const prefix = "schluessel_example"
 
 func main() {
+	// create private/public key pair
 	private, err := schluessel.Create(prefix)
 	if err != nil {
 		log.Fatal(err)
@@ -17,6 +18,7 @@ func main() {
 	fmt.Printf("Private key:\n%v\n\n", private)
 	fmt.Printf("Public key:\n%v\n\n", private.Public())
 
+	// generate 100 license keys
 	schluessels, err := schluessel.Generate(0, 99, private)
 	if err != nil {
 		log.Fatal(err)

@@ -80,7 +80,7 @@ func TestCreateGenerateAndVerify(t *testing.T) {
 			if parsedGenerated.s.Cmp(g.s) != 0 {
 				t.Errorf("Want s's to be equal but got %v and %v", parsedGenerated.s, g.s)
 			}
-			if p := actual.Public(); !Verify(g, p) {
+			if p := actual.Public(); !Verify(&g, p) {
 				t.Errorf("Want %v verified with %v", g, p)
 			}
 			publicString := actual.Public().String()

@@ -106,7 +106,7 @@ func Create(prefix string) (*Private, error) {
 }
 
 // Verifies the given Schluessel with the public key
-func Verify(schluessel Schluessel, public *Public) bool {
+func Verify(schluessel *Schluessel, public *Public) bool {
 	return ecdsa.Verify(public.key, schluessel.hash[:], schluessel.r, schluessel.s)
 }
 
