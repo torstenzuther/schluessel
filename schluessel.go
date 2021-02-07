@@ -71,7 +71,7 @@ func Generate(from, to uint, private *Private) []Schluessel {
 		return nil
 	}
 	res := make([]Schluessel, to-from+1)
-	for i := uint(0); i <= to-from; i++ {
+	for i := from; i <= to; i++ {
 		msg := fmt.Sprintf("%v%v", private.prefix, i)
 		hash := sha256.Sum256([]byte(msg))
 		r, s, err := ecdsa.Sign(rand.Reader, private.key, hash[:])
