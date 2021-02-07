@@ -18,7 +18,11 @@ func TestCreateAndFromString(t *testing.T) {
 			prefix: "abcdefghijklmnopqrstuvwxyz",
 		},
 	} {
-		actual := Create(test.prefix)
+		actual, err := Create(test.prefix)
+		if err != nil {
+			t.Error(err)
+			return
+		}
 		actualString := fmt.Sprintf("%v", actual)
 		readBack, err := ParsePrivate(actualString)
 		if err != nil {
@@ -49,8 +53,16 @@ func TestCreateGenerateAndVerify(t *testing.T) {
 			to:     5,
 		},
 	} {
-		actual := Create(test.prefix)
-		generated := Generate(test.from, test.to, actual)
+		actual, err := Create(test.prefix)
+		if err != nil {
+			t.Error(err)
+			return
+		}
+		generated, err := Generate(test.from, test.to, actual)
+		if err != nil {
+			t.Error(err)
+			return
+		}
 		for _, g := range generated {
 			gString := g.String()
 			t.Logf("%v\n", gString)

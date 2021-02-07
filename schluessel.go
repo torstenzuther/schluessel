@@ -66,9 +66,9 @@ func (private *Private) Public() *Public {
 // Generate generates to - from + 1 Schluessel for the given Private key given by private.
 // For each index between from and to a Schluessel is generated. Note that for equal private keys and equal indices
 // equal Schluessel are generated
-func Generate(from, to uint, private *Private) []Schluessel {
+func Generate(from, to uint, private *Private) ([]Schluessel, error) {
 	if to < from {
-		return nil
+		return nil, nil
 	}
 	res := make([]Schluessel, to-from+1)
 	for i := from; i <= to; i++ {
@@ -76,33 +76,33 @@ func Generate(from, to uint, private *Private) []Schluessel {
 		hash := sha256.Sum256([]byte(msg))
 		r, s, err := ecdsa.Sign(rand.Reader, private.key, hash[:])
 		if err != nil {
-			panic(err)
+			return nil, err
 		}
-		res[i] = Schluessel{
+		res[i-from] = Schluessel{
 			hash: hash,
 			r:    r,
 			s:    s,
 		}
 	}
-	return res
+	return res, nil
 }
 
-// Creates a private key using a prefix. Since simple numbers are usi
-func Create(prefix string) *Private {
+// Creates a private key using the given prefix or return an error if something went wrong.
+func Create(prefix string) (*Private, error) {
 	if strings.Contains(prefix, sep) {
-		panic(errors.New(fmt.Sprintf("prefix must not contain %v", sep)))
+		return nil, errors.New(fmt.Sprintf("prefix must not contain %v", sep))
 	}
 	if len(prefix) == 0 {
-		panic(errors.New("prefix must not have len 0"))
+		return nil, errors.New("prefix must not have len 0")
 	}
 	private, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 	return &Private{
 		prefix: prefix,
 		key:    private,
-	}
+	}, nil
 }
 
 // Verifies the given Schluessel with the public key

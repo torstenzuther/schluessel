@@ -10,7 +10,7 @@ the client application. It uses the ECSDA signature algorithm under the hood.
 ## 🔧 Usage
 
 Run `go get github.com/torstenzuther/schluessel`
-
+You can use the following instructions or have a look at the examples.
 
 ### 1. Generate private and public key
    
