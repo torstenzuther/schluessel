@@ -31,5 +31,6 @@ Feel free to open an issue if you have any additions, questions or requests.
 
 # 🎨 License
 
+MIT License
 
 
