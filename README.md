@@ -1,4 +1,4 @@
-## 🔑 schluessel
+## 🔑 Schluessel
 Schluessel is an ultra simple license key library written in Go.
 Schluessel means key in German.
 Its main use case is to give desktop applications written in Go some protection by
