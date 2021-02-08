@@ -1,7 +1,7 @@
 ## 🔑 Schluessel
 Schluessel is an ultra simple license key library written in Go.
 Schluessel means key in German.
-Its main use case is to give desktop applications written in Go some protection by
+Its main use case is to give (commercial) desktop applications written in Go some protection by
 implementing a license key mechanism.
 
 An arbitrary number of Schluessel can be generated and verified (true/false) in 
@@ -24,7 +24,7 @@ The prefix will be part of the private key and should not be exposed. It can be 
 
 To create e.g. the Schlussel from 1 to 100 call `schluessel.Generate(1, 100, p)` with p being the private key (result of step 1 above).
 
-To distribute your Schluessel just output them like `fmt.Sprintf("%v", s)` with s being a Schlussel.
+To distribute your Schluessel just output them as string by calling `fmt.Sprintf("%v", s)` with s being a Schlussel.
 
 ### 1. Embed public key
 
@@ -32,8 +32,8 @@ You can retrieve the public key by calling
 
 `p.Public()` on p being the generated private key from above. 
 
-You can then store the public key as a constant
-in your app by calling `fmt.Sprintf("%v", p.Public())`
+You can then store the public key as a constant string
+in your app which can be obtained by calling `fmt.Sprintf("%v", p.Public())`
 
 ### 2. Verify Schluessel
 
@@ -43,8 +43,10 @@ call `schluessel.Verify(s, p)` with s being the Schluessel and p the public key 
 ## 🔐 Security considerations
 
 As every client application can be changed and therefore be cracked
-so can apps using this library. The public key could be changed in the binary by an attacker or the check could
-be disabled as well. Its purpose is to give some security to your honest users, nothing less but also
+so can apps using this library. The embedded public key could be changed by an attacker or the Verify call could
+be disabled as well. 
+
+The purpose of this library is to give some security to your honest users, nothing less but also
 not more.
 
 
